@@ -1,0 +1,10 @@
+God::Contacts::Email.defaults do |d|
+  d.from_email = "god@<%= scope.lookupvar('::fqdn') %>"
+  d.from_name = "God on <%= scope.lookupvar('::fqdn') %>"
+end
+
+God.contact(:email) do |c|
+  c.name  = "dev"
+  c.group = "developers"
+  c.to_email = "bruno-notices@<%= scope.lookupvar('::fqdn') %>"
+end

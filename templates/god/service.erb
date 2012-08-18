@@ -1,0 +1,12 @@
+# Managed by puppet - DO NOT EDIT
+#
+Bruno::God.<%= @service %> do |w|
+  w.uid = '<%= @uid %>'
+  w.gid = '<%= @gid %>'
+
+  w.env = {
+  <%- @env.each do |key, value| -%>
+    '<%= key %>' => '<%= value %>',
+  <%- end -%>
+  }
+end

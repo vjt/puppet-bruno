@@ -1,0 +1,7 @@
+name         'vjt-bruno'
+version      '0.0.1'
+author       'vjt'
+license      'BSD-2'
+summary      'bRUNo - Ruby, Unicorn, Nginx on puppet'
+description  'Yet another Ruby deployment stack'
+project_page 'https://github.com/vjt/puppet-bruno'

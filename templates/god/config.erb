@@ -1,0 +1,17 @@
+# vim: ft=ruby
+
+# Global options
+God.pid_file_directory = '/var/run/god'
+God.log_file           = '/var/log/god.log'
+God.log_level          = :info
+God.socket_perms       = 0700
+
+# Load in all God shared configs.
+# Shared configs apply to all instances.
+God.load "/etc/god/conf.d/*.god"
+
+# Shared services, run machine-wide
+God.load "<%= @servdir %>/*.god"
+
+# Application services
+God.load "<%= @appsdir %>/*.god"

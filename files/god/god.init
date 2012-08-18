@@ -1,0 +1,75 @@
+#!/bin/sh
+
+# System startup script for the almighty God - http://godrb.com/
+#
+# Author: Marcello Barnaba <vjt@openssl.it>
+#
+#  - vjt  Wed Feb  2 17:56:03 CET 2011
+#
+# LSB compatible service control script; see http://www.linuxbase.org/spec/
+#
+### BEGIN INIT INFO
+# Provides:       god
+# Required-Start: $network
+# Required-Stop:  $network
+# Default-Start:  3
+# Default-Stop:
+# Description:    Makes God Behave
+### END INIT INFO
+
+EXEC=/usr/bin/god
+
+PID=/var/run/god.pid
+CONF=/etc/god/config
+
+. /etc/rc.status
+
+case "$1" in
+    start)
+        if [ -f ${PID} ] && [ -x /proc/`cat ${PID}` ]; then
+            echo "$PID exists, God can be identified by `cat ${PID}`"
+        else
+            rm -f ${PID}
+
+            echo -n "Invoking God..."
+            $EXEC -P $PID -c $CONF
+            rc_status -v
+        fi
+    ;;
+
+    stop)
+        if [ ! -f $PID ]; then
+            echo "$PID does not exist, God has left us in the cold."
+        else
+            if [ "x$2" = "x" ]; then
+                echo -n "Killing God and all childs..."
+                $EXEC terminate >/dev/null
+            else
+                echo -n "Killing God..."
+                $EXEC quit >/dev/null
+            fi
+            rc_status -v
+        fi
+    ;;
+
+    reload)
+        $0 stop soft
+        $0 start
+    ;;
+
+    restart)
+        $0 stop
+        $0 start
+    ;;
+
+    status)
+        echo -n "Checking whether God exists..."
+        /sbin/checkproc -p $PID $EXEC
+        rc_status -v
+    ;;
+
+    *)
+        echo "Usage: $0 <start|stop|restart|status>"
+        exit 1
+    ;;
+esac

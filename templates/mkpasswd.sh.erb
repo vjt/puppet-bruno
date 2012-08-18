@@ -1,0 +1,24 @@
+#!/bin/sh
+
+if [ $# -lt 2 ]; then
+  echo "Usage: $0 <service> <instance>" >&2
+  exit 1
+fi
+
+root=<%= scope.lookupvar('bruno::master::passwd') %>
+
+pass="$root/$1-$2.passwd"
+
+if [ ! -r "$pass" ]; then
+  touch $pass
+  chmod 600 $pass
+
+  random=$(
+    dd if=/dev/urandom bs=4096 count=1 2>/dev/null |\
+      sha1sum | cut -b 1-16
+  )
+
+  echo -n $random > $pass
+fi
+
+cat $pass
