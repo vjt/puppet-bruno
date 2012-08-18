@@ -56,6 +56,7 @@ manifest file.
 * [puppet-postgresql](http://github.com/vjt/puppet-postgresql)
 * [puppet-nginx](http://github.com/vjt/puppet-nginx)
 * [puppet-vim](http://github.com/vjt/puppet-vim)
+* [puppet-git](http://github.com/vjt/puppet-git)
 
 ## Caveats
 
